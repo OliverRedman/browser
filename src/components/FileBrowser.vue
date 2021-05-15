@@ -196,13 +196,13 @@ tbody {
 
 								<tr v-if="path.length > 0">
 									<td class="px-3">
-										<router-link to="../">
+										<div @dblclick="exit">
 											<a
 												href="javascript:null"
-												v-on:click="back"
+												@dblclick="back"
 												>..</a
 											>
-										</router-link>
+										</div>
 									</td>
 								</tr>
 
@@ -449,6 +449,9 @@ export default {
 		async back() {
 			this.$store.dispatch("files/updateCreateFolderInputShow", false);
 			await this.$store.dispatch("files/openDropdown", null);
+		},
+		exit() {
+			this.$router.push("../");
 		},
 
 		async goToRoutePath() {

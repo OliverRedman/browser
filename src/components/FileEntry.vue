@@ -68,6 +68,7 @@ a {
 		scope="row"
 		v-bind:class="{ 'selected-row': isFileSelected() }"
 		v-on:click="selectFile"
+		@dblclick="dbClickItem"
 	>
 		<td class="w-50" data-ls-disabled>
 			<span v-if="file.type === 'folder'">
@@ -89,11 +90,11 @@ a {
 				</svg>
 
 				<span v-on:click="fileClick">
-					<router-link v-bind:to="link">
+					<a>
 						<a href="javascript:null" style="margin-left: 5px">
 							{{ filename }}
 						</a>
-					</router-link>
+					</a>
 				</span>
 			</span>
 
@@ -445,6 +446,13 @@ export default {
 	},
 
 	methods: {
+		dbClickItem() {
+			if (this.file.type === "folder") {
+				this.$router.push(this.link);
+			} else if (this.file.type === "file") {
+				this.openModal();
+			}
+		},
 		openModal() {
 			this.$store.commit("files/openModal", this.path + this.file.Key);
 		},
